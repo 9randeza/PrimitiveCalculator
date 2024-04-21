@@ -16,7 +16,7 @@ public:
     bool checkdev = false;
     bool checkmult = false;
     double tempval;
-    bool d = 1; //проверка точки
+    bool d = true; //проверка точки
     newFile(QWidget *parent = nullptr);
 
 private slots:

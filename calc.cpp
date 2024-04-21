@@ -77,50 +77,103 @@ newFile::newFile(QWidget *parent) : QWidget{parent}{
     connect(del, &QPushButton::clicked, this, &newFile::Del);
 }
 void newFile::OnMinus(){
-    if(checkplus == true || checkdev == true || checkmult == true){
+     QString oper = lbl->text();
+    if(oper == "+" || oper == "-" || oper == "x" || oper == "/"){
+         Ikvl();
+         checkdev = false;
+         checkplus = false;
+         checkmult = false;
+         checkminus = true;
+         lbl->setText(QString("-"));
+         d = true;
+     }else if(checkplus == true || checkdev == true || checkmult == true || checkminus == true){
         checkdev = false;
         checkplus = false;
         checkmult = false;
-    }
+        checkminus = true;
+        lbl->setText(QString("-"));
+        d = true;
+    }else{
     d = true;
     checkminus = true;
     tempval = lbl->text().toDouble();
-    lbl->setText(QString::number(0));
+    lbl->setText(QString("-"));
+    }
 }
 void newFile::OnPlus(){
-    if(checkminus == true || checkdev == true || checkmult == true){
+     QString oper = lbl->text();
+    if(oper == "+" || oper == "-" || oper == "x" || oper == "/"){
         checkdev = false;
         checkminus = false;
         checkmult = false;
-    }
+        checkplus = true;
+        lbl->setText(QString("+"));
+        d = true;
+    }else if(checkminus == true || checkdev == true || checkmult == true || checkplus == true){
+        Ikvl();
+        lbl->setText(QString("+"));
+        d = true;
+        checkdev = false;
+        checkminus = false;
+        checkmult = false;
+        checkplus = true;
+    }else{
     d = true;
     checkplus = true;
     tempval = lbl->text().toDouble();
-    lbl->setText(QString::number(0));
+    lbl->setText(QString("+"));
+    }
 }
 
 void newFile::OnMult(){
-    if(checkminus == true || checkdev == true || checkplus == true){
-        checkdev = false;
+     QString oper = lbl->text();
+    if(oper == "+" || oper == "-" || oper == "x" || oper == "/"){
+        checkmult = true;
         checkminus = false;
         checkplus = false;
-    }
+        checkdev = false;
+        lbl->setText(QString("x"));
+        d = true;
+    }else if(checkminus == true || checkdev == true || checkplus == true || checkmult == true){
+        d = true;
+        Ikvl();
+        lbl->setText(QString("x"));
+        checkdev = false;
+        checkmult = true;
+        checkminus = false;
+        checkplus = false;
+    }else{
     d = true;
     checkmult = true;
     tempval = lbl->text().toDouble();
-    lbl->setText(QString::number(0));
+    lbl->setText(QString("x"));
+    }
 }
 
 void newFile::OnDev(){
-    if(checkminus == true || checkmult == true || checkplus == true){
+    QString oper = lbl->text();
+    if(oper == "+" || oper == "-" || oper == "x" || oper == "/"){
         checkmult = false;
         checkminus = false;
         checkplus = false;
-    }
+        checkdev = true;
+        lbl->setText(QString("/"));
+        d = true;
+    } else if(checkminus == true || checkmult == true || checkplus == true || checkdev == true){
+        d = true;
+        Ikvl();
+        lbl->setText(QString("/"));
+        checkdev = true;
+        checkmult = false;
+        checkminus = false;
+        checkplus = false;
+    }else{
     d = true;
     checkdev = true;
     tempval = lbl->text().toDouble();
-    lbl->setText(QString::number(0));
+    lbl->setText(QString("/"));
+    }
+
 }
 
 void newFile::Set0(){
@@ -131,7 +184,7 @@ void newFile::Set0(){
 
 void newFile::Set1(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "1"; // Если текущее число равно 0, заменяем его на 1
     } else {
         num += "1"; // Иначе добавляем 1 в конец числа
@@ -141,7 +194,7 @@ void newFile::Set1(){
 
 void newFile::Set2(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "2";
     } else {
         num += "2";
@@ -152,7 +205,7 @@ void newFile::Set2(){
 
 void newFile::Set3(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "3";
     } else {
         num += "3";
@@ -163,7 +216,7 @@ void newFile::Set3(){
 
 void newFile::Set4(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "4";
     } else {
         num += "4";
@@ -174,7 +227,7 @@ void newFile::Set4(){
 
 void newFile::Set5(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "5";
     } else {
         num += "5";
@@ -184,7 +237,7 @@ void newFile::Set5(){
 
 void newFile::Set6(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "6";
     } else {
         num += "6";
@@ -194,7 +247,7 @@ void newFile::Set6(){
 
 void newFile::Set7(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "7";
     } else {
         num += "7";
@@ -204,7 +257,7 @@ void newFile::Set7(){
 
 void newFile::Set8(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "9";
     } else {
         num += "8";
@@ -215,7 +268,7 @@ void newFile::Set8(){
 
 void newFile::Set9(){
     QString num = lbl->text(); // Получаем текущее число
-    if (num == "0") {
+    if (num == "0" || num == "x" || num == "/" || num == "+" || num == "-") {
         num = "9";
     } else {
         num += "9";
@@ -226,7 +279,9 @@ void newFile::Set9(){
 
 void newFile::SetDot(){
     QString dot = lbl->text();
-    if(d == 1){
+    if(dot== "x" || dot == "/" || dot == "+" || dot == "-"){
+        d = false;
+    }else if(d == 1){
         dot += ".";
         d = false;
     }
@@ -238,24 +293,32 @@ void newFile::Ikvl(){
         double num = lbl->text().toDouble(); // Получаем текущее число
         num -= tempval;
         num *= -1;
+        tempval = num;
         lbl->setText(QString::number(num));
     }
     if(checkplus == true){
         double num = lbl->text().toDouble(); // Получаем текущее число
         num += tempval;
+        tempval = num;
         lbl->setText(QString::number(num));
     }
     if(checkmult == true){
         double num = lbl->text().toDouble(); // Получаем текущее число
         num *= tempval;
+        tempval = num;
         lbl->setText(QString::number(num));
     }
     if(checkdev == true){
         double temp = tempval;
         double num = lbl->text().toDouble(); // Получаем текущее число
         temp /= num;
+        tempval = temp;
         lbl->setText(QString::number(temp));
     }
+    checkdev = false;
+    checkminus = false;
+    checkmult = false;
+    checkplus = false;
 
 }
 void newFile::CE(){
@@ -270,11 +333,16 @@ void newFile::CE(){
 
 void newFile::Del(){
     QString num = lbl->text();
+    QString num1 = num;
     QChar lastChar = num.at(num.length() - 1);
     if(lastChar == '.'){
         d = 1;
     }
-    num.chop(1); // Удаляем последний символ
-    lbl->setText(num);
-
+    num1.chop(1);
+    if(num == "x" || num == "/" || num == "+" || num == "-" || num.isEmpty()){
+        lbl->setText(num1);
+    }else if(num1.isEmpty()){
+        num1 = "0";
+    }
+     lbl->setText(num1);
 }
